@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nesy Bohbot | Architecture & Interior Design</title>
+    <!-- הוספת גופן Montserrat מ-Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif; /* שינוי גופן ל-Montserrat */
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .tagline span {
+            color: #e53935;
+            margin: 0 10px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e53935;
+        }
+        
+        .active {
+            color: #e53935 !important;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('data:image/png;base64,placeholder');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.6);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase; /* טקסט באותיות גדולות כמו בפוסטר */
+            letter-spacing: 2px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e53935;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn:hover {
+            background-color: #c62828;
+        }
+        
+        /* About Section */
+        .about {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #e53935;
+        }
+        
+        .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            text-align: right;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Contact Section */
+        .contact {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-card {
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: 280px;
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #e53935, #c62828);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(229, 57, 53, 0.3);
+        }
+        
+        .contact-details {
+            text-align: right;
+        }
+        
+        .contact-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .contact-link {
+            font-size: 1.1rem;
+            color: #e53935;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .contact-link:hover {
+            color: #c62828;
+            border-bottom-color: #c62828;
+            transform: translateY(-2px);
+        }
+        
+        .contact-cta {
+            text-align: center;
+            background: linear-gradient(135deg, #f5f5f5, #ffffff);
+            border-radius: 15px;
+            padding: 40px 30px;
+            border: 1px solid #eee;
+        }
+        
+        .contact-cta p {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .contact-subtitle {
+            font-size: 1.1rem !important;
+            color: #666 !important;
+            font-weight: 400 !important;
+            margin-bottom: 0 !important;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            color: white;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .social-links a:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-card {
+                flex-direction: column;
+                gap: 40px;
+                padding: 40px 20px;
+            }
+            
+            .contact-item {
+                min-width: auto;
+                justify-content: center;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards; /* אנימציה חלקה יותר */
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Nesy Bohbot</div>
+        <div class="tagline">Architecture <span>|</span> Interior Design</div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-brand">NB</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active" id="home-link">בית</a></li>
+                <li><a href="gallery.html" id="gallery-link">גלריה</a></li>
+                <li><a href="#contact" id="contact-link">צור קשר</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <img src="/api/placeholder/600/400" class="hero-image" alt="Nesy Bohbot Architecture Office" id="hero-img">
+        <h1 class="fade-in">עיצוב שמשנה חיים</h1>
+        <p class="fade-in delay-1">מעל 10 שנות ניסיון באדריכלות ועיצוב פנים, משלבת אסתטיקה, פונקציונליות וחדשנות</p>
+        <a href="#contact" class="btn fade-in delay-2">צור קשר עכשיו</a>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="home-content">
+        <h2 class="section-title">אודות</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>סטודיו נסי בוהבוט לאדריכלות ועיצוב פנים מתמחה ביצירת מרחבים ייחודיים המשלבים אסתטיקה, פונקציונליות וחדשנות. עם ניסיון עשיר בפרויקטים מגוונים - החל מבתים פרטיים, דרך מרחבים מסחריים ועד למבני ציבור - אני מאמינה כי כל פרויקט מהווה הזדמנות ליצירת סביבה מעוררת השראה.</p>
+                <p>גישתי מתאפיינת בהקשבה עמוקה לצרכי הלקוח, תשומת לב לפרטים והתאמה מדויקת לסביבה ולתרבות המקומית. אני עובדת בשיתוף פעולה הדוק עם לקוחותיי בכל שלבי התכנון והביצוע, מהקונספט הראשוני ועד להשלמת הפרויקט.</p>
+                <p>הסטודיו שם דגש על קיימות, שימוש בחומרים איכותיים ופתרונות עיצוב חדשניים, תוך שמירה על אחריות סביבתית וחברתית.</p>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="Nesy Bohbot Office" id="about-img">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">צור קשר</h2>
+        <div class="contact-info">
+            <div class="contact-card">
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h3>טלפון</h3>
+                        <a href="tel:052-61160483" class="contact-link">052-61160483</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-details">
+                        <h3>אימייל</h3>
+                        <a href="mailto:nb.0526116483@gmail.com" class="contact-link">nb.0526116483@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-cta">
+                <p>מוכנה ליצור עבורכם חלל מרגש ופונקציונלי</p>
+                <p class="contact-subtitle">בואו נתחיל לתכנן את הפרויקט שלכם</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Pinterest</a>
+            </div>
+            <div class="copyright">
+                © 2025 Nesy Bohbot Architecture & Interior Design. כל הזכויות שמורות.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Load images from actual images
+        window.onload = function() {
+            // Set hero image
+            document.getElementById('hero-img').src = "https://imgur.com/Et3Fza9.jpg";
+            // Set about image with correct URL format
+            document.getElementById('about-img').src = "https://i.imgur.com/ZnljW56.jpg";
+        };
+    
+        // Navigation functionality
+        document.getElementById('home-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('home-link').classList.add('active');
+            document.getElementById('gallery-link').classList.remove('active');
+            document.getElementById('contact-link').classList.remove('active');
+        });
+        
+        document.getElementById('contact-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('contact-link').classList.add('active');
+            document.getElementById('home-link').classList.remove('active');
+            document.getElementById('gallery-link').classList.remove('active');
+            
+            // Scroll to contact section
+            document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+        });
+        
+        // Transition effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add initial fade-in animations
+            setTimeout(function() {
+                const heroElements = document.querySelectorAll('.hero h1, .hero p, .hero .btn');
+                heroElements.forEach(element => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>

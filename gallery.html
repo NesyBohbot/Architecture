@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nesy Bohbot | גלריה</title>
+    <!-- הוספת גופן Montserrat מ-Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif; /* שינוי גופן ל-Montserrat */
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .tagline span {
+            color: #e53935;
+            margin: 0 10px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e53935;
+        }
+        
+        .active {
+            color: #e53935 !important;
+        }
+        
+        /* Gallery */
+        .gallery {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 10px; /* הפחתת המרווח בין התמונות */
+            margin-top: 40px;
+            border: 1px solid #000; /* מסגרת שחורה כמו בפוסטר */
+            padding: 10px;
+            background: #000; /* רקע שחור במקום הפסים */
+        }
+        
+        .gallery-item {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #000; /* מסגרת שחורה לכל תמונה */
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            color: white;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .social-links a:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow: auto;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards; /* אנימציה חלקה יותר */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Nesy Bohbot</div>
+        <div class="tagline">Architecture <span>|</span> Interior Design</div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-brand">NB</a>
+            <ul class="nav-links">
+                <li><a href="index.html" id="home-link">בית</a></li>
+                <li><a href="gallery.html" class="active" id="gallery-link">גלריה</a></li>
+                <li><a href="index.html#contact" id="contact-link">צור קשר</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery-content">
+        <h2 class="section-title">גלריה</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/no1uM2t.jpg" alt="Project 1" class="gallery-img-1">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/J26nmxb.jpg" alt="Project 2" class="gallery-img-2">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/ZnljW56.jpg" alt="Project 3" class="gallery-img-3">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/p9vMIYB.jpg" alt="Project 4" class="gallery-img-4">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/5O6hhtt.jpg" alt="Project 5" class="gallery-img-5">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/jp2PpuI.jpg" alt="Project 6" class="gallery-img-6">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/ZFDpJ63.jpg" alt="Project 7" class="gallery-img-7">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/uSJi4cA.jpg" alt="Project 8" class="gallery-img-8">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/t9N26Ut.jpg" alt="Project 9" class="gallery-img-9">
+            </div>
+            <!-- הפוסטר שהיה קיים -->
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/uxRY98R.jpg" alt="Nesy Architecture Office Poster" class="gallery-img-10">
+            </div>
+            <!-- תמונות נוספות -->
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/Ug6eqoK.jpg" alt="Project 11" class="gallery-img-11">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/wj0xyGp.jpg" alt="Project 12" class="gallery-img-12">
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/IGUSCDo.jpg" alt="Project 13" class="gallery-img-13">
+            </div>
+ <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/IGUSCDo.jpg" alt="Project 15" class="gallery-img-15">
+            </div>
+ <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/IGUSCDo.jpg" alt="Project 16" class="gallery-img-16">
+            </div>
+            </div>
+            <div class="gallery-item" onclick="openModal(this)">
+                <img src="https://i.imgur.com/QRrGcVg.jpg" alt="Project 14" class="gallery-img-14">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal -->
+    <div class="modal" id="image-modal">
+        <span class="modal-close" onclick="closeModal()">×</span>
+        <img class="modal-content" id="modal-img">
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Pinterest</a>
+            </div>
+            <div class="copyright">
+                © 2025 Nesy Bohbot Architecture & Interior Design. כל הזכויות שמורות.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Load images from actual images
+        window.onload = function() {
+            // Set the gallery images
+            document.querySelector('.gallery-img-1').src = "https://i.imgur.com/no1uM2t.jpg";
+            document.querySelector('.gallery-img-2').src = "https://i.imgur.com/J26nmxb.jpg";
+            document.querySelector('.gallery-img-3').src = "https://i.imgur.com/ZnljW56.jpg";
+            document.querySelector('.gallery-img-4').src = "https://i.imgur.com/p9vMIYB.jpg";
+            document.querySelector('.gallery-img-5').src = "https://i.imgur.com/5O6hhtt.jpg";
+            document.querySelector('.gallery-img-6').src = "https://i.imgur.com/jp2PpuI.jpg";
+            document.querySelector('.gallery-img-7').src = "https://i.imgur.com/ZFDpJ63.jpg";
+            document.querySelector('.gallery-img-8').src = "https://i.imgur.com/uSJi4cA.jpg";
+            document.querySelector('.gallery-img-9').src = "https://i.imgur.com/t9N26Ut.jpg";
+            document.querySelector('.gallery-img-10').src = "https://i.imgur.com/uxRY98R.jpg";
+            document.querySelector('.gallery-img-11').src = "https://i.imgur.com/Ug6eqoK.jpg";
+            document.querySelector('.gallery-img-12').src = "https://i.imgur.com/wj0xyGp.jpg";
+            document.querySelector('.gallery-img-13').src = "https://i.imgur.com/IGUSCDo.jpg";
+document.querySelector('.gallery-img-15').src = "https://imgur.com/OmAznp8.jpg  ";
+document.querySelector('.gallery-img-16').src = "https://imgur.com/MzXt1MD.jpg";
+        };
+        
+        // Modal functionality
+        function openModal(element) {
+            var modal = document.getElementById('image-modal');
+            var modalImg = document.getElementById('modal-img');
+            modal.style.display = 'flex';
+            
+            // Get the image from inside the gallery item
+            var img = element.querySelector('img');
+            modalImg.src = img.src;
+        }
+        
+        function closeModal() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of the image
+        window.onclick = function(event) {
+            var modal = document.getElementById('image-modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Add fade-in animation to gallery items on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            galleryItems.forEach((item, index) => {
+                item.classList.add('fade-in');
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
