@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NESY BOHBOT - אדריכלות</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #000000 0%, #333333 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e31e24;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #e31e24;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://i.imgur.com/sdqZNzY.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(227, 30, 36, 0.1), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
+        }
+
+        .hero-content h1 .highlight {
+            color: #e31e24;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #e31e24;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(227, 30, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #c41e3a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 30, 36, 0.4);
+        }
+
+        /* Featured Projects */
+        .featured-projects {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 50%, #2a2a2a 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+        }
+
+        .section-title .highlight {
+            color: #e31e24;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-info {
+            color: white;
+        }
+
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #333333 0%, #1a1a1a 50%, #333333 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .about-text h2 .highlight {
+            color: #e31e24;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background: linear-gradient(135deg, #2a2a2a, #1e1e1e);
+            color: #ffffff;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-left: 4px solid #e31e24;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact h2 .highlight {
+            color: #e31e24;
+        }
+
+        .contact-info {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info a {
+            color: #e31e24;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Gallery Page */
+        .gallery-page {
+            display: none;
+            padding: 120px 0 50px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 50%, #2a2a2a 100%);
+            min-height: 100vh;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e31e24, #c41e3a);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(227, 30, 36, 0.3);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #c41e3a, #a01a2e);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(227, 30, 36, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                background-attachment: scroll;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .skills {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">NESY BOHBOT</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showHome()">בית</a></li>
+                <li><a href="#" onclick="showGallery()">גלריה</a></li>
+                <li><a href="#contact">צור קשר</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home-page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>עיצוב <span class="highlight">אדריכלי</span> מודרני</h1>
+                <p>יוצרת חללים מרהיבים המשלבים פונקציונליות ויופי, עם התמחות בעיצוב מודרני ומקצועי</p>
+                <a href="#" onclick="showGallery()" class="cta-button">צפה בעבודות שלי</a>
+            </div>
+        </section>
+
+        <!-- Featured Projects -->
+        <section class="featured-projects">
+            <div class="container">
+                <h2 class="section-title">פרויקטים <span class="highlight">נבחרים</span></h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image" style="background-image: url('https://i.imgur.com/Et3Fza9.jpg');">
+                            <div class="project-overlay">
+                                <div class="project-info">
+                                    <h3>עיצוב מודרני</h3>
+                                    <p>פרויקט מגורים מודרני</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image" style="background-image: url('https://i.imgur.com/IGUSCDo.jpg');">
+                            <div class="project-overlay">
+                                <div class="project-info">
+                                    <h3>אדריכלות עכשווית</h3>
+                                    <p>חלל עבודה מעוצב</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <a href="#" onclick="showGallery()" class="cta-button">צפה בכל הפרויקטים</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>על <span class="highlight">נסי בוחבוט</span></h2>
+                        <p>אדריכלית עם ניסיון רב שנים בתכנון ועיצוב מבנים מגורים ומסחריים. מתמחה ביצירת חללים מודרניים ופונקציונליים המשקפים את האישיות והצרכים של הלקוח.</p>
+                        <p>הגישה שלי מבוססת על הבנה עמוקה של הצרכים האנושיים והסביבתיים, תוך שילוב של טכנולוגיות מתקדמות ועיצוב עכשווי.</p>
+                        <div class="skills">
+                            <div class="skill">תכנון אדריכלי</div>
+                            <div class="skill">עיצוב פנים</div>
+                            <div class="skill">הדמיות תלת מימד</div>
+                            <div class="skill">ליווי פרויקטים</div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div style="width: 100%; height: 400px; background: linear-gradient(45deg, #e31e24, #333); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; text-align: center;">
+                            אדריכלות<br>מקצועית<br>ויצירתית
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2>בואו <span class="highlight">ניצור קשר</span></h2>
+                <div class="contact-info">
+                    <p>מוכנה לעזור לכם להגשים את החלום האדריכלי שלכם</p>
+                    <p>טלפון: <a href="tel:0526116483">052-6116-483</a></p>
+                    <p>נסי בוחבוט - אדריכלות מקצועית</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Gallery Page -->
+    <div id="gallery-page" class="gallery-page">
+        <div class="container">
+            <a href="#" onclick="showHome()" class="back-button">← חזרה לדף הבית</a>
+            <h2 class="section-title">גלריית <span class="highlight">עבודות</span></h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/Et3Fza9.jpg" alt="פרויקט אדריכלות 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/IGUSCDo.jpg" alt="פרויקט אדריכלות 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/wj0xyGp.jpg" alt="פרויקט אדריכלות 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/Ug6eqoK.jpg" alt="פרויקט אדריכלות 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/t9N26Ut.jpg" alt="פרויקט אדריכלות 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/ZFDpJ63.jpg" alt="פרויקט אדריכלות 6">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/jp2PpuI.jpg" alt="פרויקט אדריכלות 7">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/uxRY98R.jpg" alt="פרויקט אדריכלות 8">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/5O6hhtt.jpg" alt="פרויקט אדריכלות 9">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/p9vMIYB.jpg" alt="פרויקט אדריכלות 10">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/J26nmxb.jpg" alt="פרויקט אדריכלות 11">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/no1uM2t.jpg" alt="פרויקט אדריכלות 12">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/QRrGcVg.jpg" alt="פרויקט אדריכלות 13">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/MzXt1MD.jpg" alt="פרויקט אדריכלות 14">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.imgur.com/OmAznp8.jpg" alt="פרויקט אדריכלות 15">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 נסי בוחבוט - אדריכלות. כל הזכויות שמורות.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showHome() {
+            document.getElementById('home-page').style.display = 'block';
+            document.getElementById('gallery-page').style.display = 'none';
+        }
+
+        function showGallery() {
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('gallery-page').style.display = 'block';
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#contact') {
+                    e.preventDefault();
+                    document.querySelector('#contact').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.project-card, .about-content');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize animations
+        document.querySelectorAll('.project-card, .about-content').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+    </script>
+</body>
+</html>
