@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif; /* שינוי גופן ל-Montserrat */
+            font-family: 'Montserrat', sans-serif;
         }
         
         body {
@@ -25,6 +25,44 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-switcher select {
+            background: transparent;
+            border: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            padding: 4px 8px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-switcher select:hover {
+            background-color: rgba(229, 57, 53, 0.1);
+            color: #e53935;
+        }
+        
+        .language-switcher select option {
+            background: white;
+            color: #333;
+            padding: 8px;
         }
         
         /* Header Styles */
@@ -124,7 +162,7 @@
             margin-bottom: 20px;
             position: relative;
             z-index: 1;
-            text-transform: uppercase; /* טקסט באותיות גדולות כמו בפוסטר */
+            text-transform: uppercase;
             letter-spacing: 2px;
         }
         
@@ -365,6 +403,12 @@
                 min-width: auto;
                 justify-content: center;
             }
+            
+            .language-switcher {
+                top: 10px;
+                left: 10px;
+                padding: 6px 10px;
+            }
         }
         
         /* Animation */
@@ -380,7 +424,7 @@
         }
         
         .fade-in {
-            animation: fadeIn 1s ease forwards; /* אנימציה חלקה יותר */
+            animation: fadeIn 1s ease forwards;
         }
         
         .delay-1 {
@@ -397,10 +441,19 @@
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <select id="languageSwitcher">
+            <option value="he">🇮🇱 עברית</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="ru">🇷🇺 Русский</option>
+        </select>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="logo">Nesy Bohbot</div>
-        <div class="tagline">Architecture <span>|</span> Interior Design</div>
+        <div class="tagline" data-key="tagline">Architecture <span>|</span> Interior Design</div>
     </header>
     
     <!-- Navigation -->
@@ -408,9 +461,9 @@
         <div class="nav-container">
             <a href="#" class="nav-brand">NB</a>
             <ul class="nav-links">
-                <li><a href="index.html" class="active" id="home-link">בית</a></li>
-                <li><a href="gallery.html" id="gallery-link">גלריה</a></li>
-                <li><a href="#contact" id="contact-link">צור קשר</a></li>
+                <li><a href="index.html" class="active" id="home-link" data-key="nav-home">בית</a></li>
+                <li><a href="gallery.html" id="gallery-link" data-key="nav-gallery">גלריה</a></li>
+                <li><a href="#contact" id="contact-link" data-key="nav-contact">צור קשר</a></li>
             </ul>
         </div>
     </nav>
@@ -418,19 +471,19 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <img src="/api/placeholder/600/400" class="hero-image" alt="Nesy Bohbot Architecture Office" id="hero-img">
-        <h1 class="fade-in">עיצוב שמשנה חיים</h1>
-        <p class="fade-in delay-1">מעל 10 שנות ניסיון באדריכלות ועיצוב פנים, משלבת אסתטיקה, פונקציונליות וחדשנות</p>
-        <a href="#contact" class="btn fade-in delay-2">צור קשר עכשיו</a>
+        <h1 class="fade-in" data-key="hero-title">עיצוב שמשנה חיים</h1>
+        <p class="fade-in delay-1" data-key="hero-subtitle">מעל 10 שנות ניסיון באדריכלות ועיצוב פנים, משלבת אסתטיקה, פונקציונליות וחדשנות</p>
+        <a href="#contact" class="btn fade-in delay-2" data-key="hero-cta">צור קשר עכשיו</a>
     </section>
     
    <!-- About Section -->
-<section class="about" id="home-content" style="direction: rtl;">
-    <h2 class="section-title" style="text-align: right;">אודות</h2>
+<section class="about" id="home-content">
+    <h2 class="section-title" data-key="about-title">אודות</h2>
     <div class="about-content">
-        <div class="about-text" style="text-align: right;">
-            <p>סטודיו נסי בוחבוט לאדריכלות ועיצוב פנים מתמחה ביצירת מרחבים ייחודיים המשלבים אסתטיקה, פונקציונליות וחדשנות. עם ניסיון עשיר בפרויקטים מגוונים - החל מבתים פרטיים, דרך מרחבים מסחריים ועד למבני ציבור - אני מאמינה כי כל פרויקט מהווה הזדמנות ליצירת סביבה מעוררת השראה.</p>
-            <p>גישתי מתאפיינת בהקשבה עמוקה לצרכי הלקוח, תשומת לב לפרטים והתאמה מדויקת לסביבה ולתרבות המקומית. אני עובדת בשיתוף פעולה הדוק עם לקוחותיי בכל שלבי התכנון והביצוע, מהקונספט הראשוני, דרך תכנון מוקפד ועד להיתרי ואישורי בנייה וביצוע בפועל.</p>
-            <p>הסטודיו שם דגש על קיימות, שימוש בחומרים איכותיים ופתרונות עיצוב חדשניים, תוך שמירה על אחריות סביבתית וחברתית.</p>
+        <div class="about-text">
+            <p data-key="about-text1">סטודיו נסי בוחבוט לאדריכלות ועיצוב פנים מתמחה ביצירת מרחבים ייחודיים המשלבים אסתטיקה, פונקציונליות וחדשנות. עם ניסיון עשיר בפרויקטים מגוונים - החל מבתים פרטיים, דרך מרחבים מסחריים ועד למבני ציבור - אני מאמינה כי כל פרויקט מהווה הזדמנות ליצירת סביבה מעוררת השראה.</p>
+            <p data-key="about-text2">גישתי מתאפיינת בהקשבה עמוקה לצרכי הלקוח, תשומת לב לפרטים והתאמה מדויקת לסביבה ולתרבות המקומית. אני עובדת בשיתוף פעולה הדוק עם לקוחותיי בכל שלבי התכנון והביצוע, מהקונספט הראשוני, דרך תכנון מוקפד ועד להיתרי ואישורי בנייה וביצוע בפועל.</p>
+            <p data-key="about-text3">הסטודיו שם דגש על קיימות, שימוש בחומרים איכותיים ופתרונות עיצוב חדשניים, תוך שמירה על אחריות סביבתית וחברתית.</p>
         </div>
         <div class="about-image">
             <img src="/api/placeholder/600/400" alt="Nesy Bohbot Office" id="about-img">
@@ -439,27 +492,27 @@
 </section>
     <!-- Contact Section -->
     <section class="contact" id="contact">
-        <h2 class="section-title">צור קשר</h2>
+        <h2 class="section-title" data-key="contact-title">צור קשר</h2>
         <div class="contact-info">
             <div class="contact-card">
                 <div class="contact-item">
                     <div class="contact-icon">📱</div>
                     <div class="contact-details">
-                        <h3>טלפון</h3>
+                        <h3 data-key="contact-phone">טלפון</h3>
                         <a href="tel:052-61160483" class="contact-link">052-61160483</a>
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">✉️</div>
                     <div class="contact-details">
-                        <h3>אימייל</h3>
+                        <h3 data-key="contact-email">אימייל</h3>
                         <a href="mailto:nb.0526116483@gmail.com" class="contact-link">nb.0526116483@gmail.com</a>
                     </div>
                 </div>
             </div>
             <div class="contact-cta">
-                <p>מוכנה ליצור עבורכם חלל מרגש ופונקציונלי</p>
-                <p class="contact-subtitle">בואו נתחיל לתכנן את הפרויקט שלכם</p>
+                <p data-key="contact-cta-main">מוכנה ליצור עבורכם חלל מרגש ופונקציונלי</p>
+                <p class="contact-subtitle" data-key="contact-cta-sub">בואו נתחיל לתכנן את הפרויקט שלכם</p>
             </div>
         </div>
     </section>
@@ -471,20 +524,129 @@
                 <a href="https://www.facebook.com/share/16S1RT1uaB/">Facebook</a>
                 <a href="https://www.instagram.com/nesy.bohbot.arhitect?igsh=MTJhMXZqYnh4dTQzNQ==">Instagram</a>
             </div>
-            <div class="copyright">
+            <div class="copyright" data-key="copyright">
                 © 2025 Nesy Bohbot Architecture & Interior Design. כל הזכויות שמורות.
             </div>
         </div>
     </footer>
     
     <script>
+        // Translations object
+        const translations = {
+            he: {
+                'tagline': 'Architecture <span>|</span> Interior Design',
+                'nav-home': 'בית',
+                'nav-gallery': 'גלריה',
+                'nav-contact': 'צור קשר',
+                'hero-title': 'עיצוב שמשנה חיים',
+                'hero-subtitle': 'מעל 10 שנות ניסיון באדריכלות ועיצוב פנים, משלבת אסתטיקה, פונקציונליות וחדשנות',
+                'hero-cta': 'צור קשר עכשיו',
+                'about-title': 'אודות',
+                'about-text1': 'סטודיו נסי בוחבוט לאדריכלות ועיצוב פנים מתמחה ביצירת מרחבים ייחודיים המשלבים אסתטיקה, פונקציונליות וחדשנות. עם ניסיון עשיר בפרויקטים מגוונים - החל מבתים פרטיים, דרך מרחבים מסחריים ועד למבני ציבור - אני מאמינה כי כל פרויקט מהווה הזדמנות ליצירת סביבה מעוררת השראה.',
+                'about-text2': 'גישתי מתאפיינת בהקשבה עמוקה לצרכי הלקוח, תשומת לב לפרטים והתאמה מדויקת לסביבה ולתרבות המקומית. אני עובדת בשיתוף פעולה הדוק עם לקוחותיי בכל שלבי התכנון והביצוע, מהקונספט הראשוני, דרך תכנון מוקפד ועד להיתרי ואישורי בנייה וביצוע בפועל.',
+                'about-text3': 'הסטודיו שם דגש על קיימות, שימוש בחומרים איכותיים ופתרונות עיצוב חדשניים, תוך שמירה על אחריות סביבתית וחברתית.',
+                'contact-title': 'צור קשר',
+                'contact-phone': 'טלפון',
+                'contact-email': 'אימייל',
+                'contact-cta-main': 'מוכנה ליצור עבורכם חלל מרגש ופונקציונלי',
+                'contact-cta-sub': 'בואו נתחיל לתכנן את הפרויקט שלכם',
+                'copyright': '© 2025 Nesy Bohbot Architecture & Interior Design. כל הזכויות שמורות.'
+            },
+            en: {
+                'tagline': 'Architecture <span>|</span> Interior Design',
+                'nav-home': 'Home',
+                'nav-gallery': 'Gallery',
+                'nav-contact': 'Contact',
+                'hero-title': 'Design that Changes Lives',
+                'hero-subtitle': 'Over 10 years of experience in architecture and interior design, combining aesthetics, functionality and innovation',
+                'hero-cta': 'Contact Now',
+                'about-title': 'About',
+                'about-text1': 'Nesy Bohbot Architecture and Interior Design Studio specializes in creating unique spaces that combine aesthetics, functionality and innovation. With rich experience in diverse projects - from private homes, through commercial spaces to public buildings - I believe that every project is an opportunity to create an inspiring environment.',
+                'about-text2': 'My approach is characterized by deep listening to client needs, attention to detail and precise adaptation to the environment and local culture. I work in close collaboration with my clients at all stages of planning and execution, from the initial concept, through meticulous planning to building permits and approvals and actual execution.',
+                'about-text3': 'The studio emphasizes sustainability, use of quality materials and innovative design solutions, while maintaining environmental and social responsibility.',
+                'contact-title': 'Contact',
+                'contact-phone': 'Phone',
+                'contact-email': 'Email',
+                'contact-cta-main': 'Ready to create an exciting and functional space for you',
+                'contact-cta-sub': 'Let\'s start planning your project',
+                'copyright': '© 2025 Nesy Bohbot Architecture & Interior Design. All rights reserved.'
+            },
+            ru: {
+                'tagline': 'Архитектура <span>|</span> Дизайн интерьера',
+                'nav-home': 'Главная',
+                'nav-gallery': 'Галерея',
+                'nav-contact': 'Контакты',
+                'hero-title': 'Дизайн, который меняет жизнь',
+                'hero-subtitle': 'Более 10 лет опыта в архитектуре и дизайне интерьера, сочетая эстетику, функциональность и инновации',
+                'hero-cta': 'Связаться сейчас',
+                'about-title': 'О нас',
+                'about-text1': 'Студия архитектуры и дизайна интерьера Неси Бохбот специализируется на создании уникальных пространств, сочетающих эстетику, функциональность и инновации. Имея богатый опыт в разнообразных проектах - от частных домов, через коммерческие помещения до общественных зданий - я верю, что каждый проект - это возможность создать вдохновляющую среду.',
+                'about-text2': 'Мой подход характеризуется глубоким слушанием потребностей клиента, вниманием к деталям и точной адаптацией к окружающей среде и местной культуре. Я работаю в тесном сотрудничестве с моими клиентами на всех этапах планирования и выполнения, от первоначальной концепции, через тщательное планирование до разрешений на строительство и фактического выполнения.',
+                'about-text3': 'Студия делает акцент на устойчивости, использовании качественных материалов и инновационных дизайнерских решениях, при этом поддерживая экологическую и социальную ответственность.',
+                'contact-title': 'Контакты',
+                'contact-phone': 'Телефон',
+                'contact-email': 'Эл. почта',
+                'contact-cta-main': 'Готова создать для вас захватывающее и функциональное пространство',
+                'contact-cta-sub': 'Давайте начнем планировать ваш проект',
+                'copyright': '© 2025 Nesy Bohbot Architecture & Interior Design. Все права защищены.'
+            }
+        };
+
+        // Language switching functionality
+        function changeLanguage(lang) {
+            const html = document.documentElement;
+            const body = document.body;
+            
+            // Update HTML attributes
+            html.setAttribute('lang', lang);
+            
+            // Update direction based on language
+            if (lang === 'he') {
+                html.setAttribute('dir', 'rtl');
+                body.style.direction = 'rtl';
+                document.querySelector('.about').style.direction = 'rtl';
+                document.querySelector('.about-text').style.textAlign = 'right';
+                document.querySelector('.section-title').style.textAlign = 'right';
+                document.querySelector('.contact-details').style.textAlign = 'right';
+            } else {
+                html.setAttribute('dir', 'ltr');
+                body.style.direction = 'ltr';
+                document.querySelector('.about').style.direction = 'ltr';
+                document.querySelector('.about-text').style.textAlign = 'left';
+                document.querySelector('.section-title').style.textAlign = 'center';
+                document.querySelector('.contact-details').style.textAlign = 'left';
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
         // Load images from actual images
         window.onload = function() {
             // Set hero image
             document.getElementById('hero-img').src = "https://imgur.com/Et3Fza9.jpg";
             // Set about image with correct URL format
             document.getElementById('about-img').src = "https://i.imgur.com/ZnljW56.jpg";
+            
+            // Load saved language preference or default to Hebrew
+            const savedLang = localStorage.getItem('selectedLanguage') || 'he';
+            document.getElementById('languageSwitcher').value = savedLang;
+            changeLanguage(savedLang);
         };
+
+        // Language switcher event listener
+        document.getElementById('languageSwitcher').addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
     
         // Navigation functionality
         document.getElementById('home-link').addEventListener('click', function(e) {
@@ -492,6 +654,13 @@
             document.getElementById('home-link').classList.add('active');
             document.getElementById('gallery-link').classList.remove('active');
             document.getElementById('contact-link').classList.remove('active');
+        });
+
+        // Gallery link with language parameter
+        document.getElementById('gallery-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentLang = document.getElementById('languageSwitcher').value;
+            window.location.href = `gallery.html?lang=${currentLang}`;
         });
         
         document.getElementById('contact-link').addEventListener('click', function(e) {
