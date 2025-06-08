@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif; /* שינוי גופן ל-Montserrat */
+            font-family: 'Montserrat', sans-serif;
         }
         
         body {
@@ -24,6 +24,44 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-switcher select {
+            background: transparent;
+            border: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            padding: 4px 8px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-switcher select:hover {
+            background-color: rgba(229, 57, 53, 0.1);
+            color: #e53935;
+        }
+        
+        .language-switcher select option {
+            background: white;
+            color: #333;
+            padding: 8px;
         }
         
         /* Header Styles */
@@ -98,14 +136,32 @@
             text-align: center;
         }
         
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #e53935;
+        }
+        
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-gap: 10px; /* הפחתת המרווח בין התמונות */
+            grid-gap: 10px;
             margin-top: 40px;
-            border: 1px solid #000; /* מסגרת שחורה כמו בפוסטר */
+            border: 1px solid #000;
             padding: 10px;
-            background: #000; /* רקע שחור במקום הפסים */
+            background: #000;
         }
         
         .gallery-item {
@@ -116,7 +172,7 @@
             transition: transform 0.3s;
             position: relative;
             overflow: hidden;
-            border: 1px solid #000; /* מסגרת שחורה לכל תמונה */
+            border: 1px solid #000;
         }
         
         .gallery-item img {
@@ -210,15 +266,33 @@
         }
         
         .fade-in {
-            animation: fadeIn 1s ease forwards; /* אנימציה חלקה יותר */
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .language-switcher {
+                top: 10px;
+                left: 10px;
+                padding: 6px 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <select id="languageSwitcher">
+            <option value="he">🇮🇱 עברית</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="ru">🇷🇺 Русский</option>
+        </select>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="logo">Nesy Bohbot</div>
-        <div class="tagline">Architecture <span>|</span> Interior Design</div>
+        <div class="tagline" data-key="tagline">Architecture <span>|</span> Interior Design</div>
     </header>
     
     <!-- Navigation -->
@@ -226,16 +300,16 @@
         <div class="nav-container">
             <a href="#" class="nav-brand">NB</a>
             <ul class="nav-links">
-                <li><a href="index.html" id="home-link">בית</a></li>
-                <li><a href="gallery.html" class="active" id="gallery-link">גלריה</a></li>
-                <li><a href="index.html#contact" id="contact-link">צור קשר</a></li>
+                <li><a href="index.html" id="home-link" data-key="nav-home">בית</a></li>
+                <li><a href="gallery.html" class="active" id="gallery-link" data-key="nav-gallery">גלריה</a></li>
+                <li><a href="index.html#contact" id="contact-link" data-key="nav-contact">צור קשר</a></li>
             </ul>
         </div>
     </nav>
     
     <!-- Gallery Section -->
     <section class="gallery" id="gallery-content">
-        <h2 class="section-title">גלריה</h2>
+        <h2 class="section-title" data-key="gallery-title">גלריה</h2>
         <div class="gallery-grid">
             <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://i.imgur.com/cUy8wBO.jpg" alt="Project 1" class="gallery-img-1">
@@ -325,16 +399,79 @@
                 <a href="https://www.facebook.com/share/16S1RT1uaB/">Facebook</a>
                 <a href="https://www.instagram.com/nesy.bohbot.arhitect?igsh=MTJhMXZqYnh4dTQzNQ==">Instagram</a>
             </div>
-            <div class="copyright">
+            <div class="copyright" data-key="copyright">
                 © 2025 Nesy Bohbot Architecture & Interior Design. כל הזכויות שמורות.
             </div>
         </div>
     </footer>
     
     <script>
-        // Load images from actual images
+        // Translations object
+        const translations = {
+            he: {
+                'tagline': 'Architecture <span>|</span> Interior Design',
+                'nav-home': 'בית',
+                'nav-gallery': 'גלריה',
+                'nav-contact': 'צור קשר',
+                'gallery-title': 'גלריה',
+                'copyright': '© 2025 Nesy Bohbot Architecture & Interior Design. כל הזכויות שמורות.'
+            },
+            en: {
+                'tagline': 'Architecture <span>|</span> Interior Design',
+                'nav-home': 'Home',
+                'nav-gallery': 'Gallery',
+                'nav-contact': 'Contact',
+                'gallery-title': 'Gallery',
+                'copyright': '© 2025 Nesy Bohbot Architecture & Interior Design. All rights reserved.'
+            },
+            ru: {
+                'tagline': 'Архитектура <span>|</span> Дизайн интерьера',
+                'nav-home': 'Главная',
+                'nav-gallery': 'Галерея',
+                'nav-contact': 'Контакты',
+                'gallery-title': 'Галерея',
+                'copyright': '© 2025 Nesy Bohbot Architecture & Interior Design. Все права защищены.'
+            }
+        };
+
+        // Language switching functionality
+        function changeLanguage(lang) {
+            const html = document.documentElement;
+            const body = document.body;
+            
+            // Update HTML attributes
+            html.setAttribute('lang', lang);
+            
+            // Update direction based on language
+            if (lang === 'he') {
+                html.setAttribute('dir', 'rtl');
+                body.style.direction = 'rtl';
+            } else {
+                html.setAttribute('dir', 'ltr');
+                body.style.direction = 'ltr';
+            }
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Update document title
+            const titles = {
+                he: 'Nesy Bohbot | גלריה',
+                en: 'Nesy Bohbot | Gallery',
+                ru: 'Nesy Bohbot | Галерея'
+            };
+            document.title = titles[lang];
+        }
+
+        // Load images and initialize language
         window.onload = function() {
-            // Set the gallery images with new URLs
+            // Set the gallery images
             document.querySelector('.gallery-img-1').src = "https://i.imgur.com/cUy8wBO.jpg";
             document.querySelector('.gallery-img-2').src = "https://i.imgur.com/X2xQlgM.jpg";
             document.querySelector('.gallery-img-3').src = "https://i.imgur.com/LAcuzen.jpg";
@@ -359,7 +496,24 @@
             document.querySelector('.gallery-img-22').src = "https://i.imgur.com/4GEduej.jpg";
             document.querySelector('.gallery-img-23').src = "https://i.imgur.com/gTtdxIZ.jpg";
             document.querySelector('.gallery-img-24').src = "https://i.imgur.com/2gjOw6f.jpg";
+            
+            // Check for language parameter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            
+            if (langParam && translations[langParam]) {
+                document.getElementById('languageSwitcher').value = langParam;
+                changeLanguage(langParam);
+            } else {
+                // Default to Hebrew
+                changeLanguage('he');
+            }
         };
+
+        // Language switcher event listener
+        document.getElementById('languageSwitcher').addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
         
         // Modal functionality
         function openModal(element) {
@@ -391,6 +545,27 @@
                 item.classList.add('fade-in');
                 item.style.animationDelay = `${index * 0.1}s`;
             });
+        });
+        
+        // Navigation functionality - navigate back to home with current language
+        document.getElementById('home-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentLang = document.getElementById('languageSwitcher').value;
+            if (currentLang !== 'he') {
+                window.location.href = `index.html?lang=${currentLang}`;
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+        
+        document.getElementById('contact-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentLang = document.getElementById('languageSwitcher').value;
+            if (currentLang !== 'he') {
+                window.location.href = `index.html?lang=${currentLang}#contact`;
+            } else {
+                window.location.href = 'index.html#contact';
+            }
         });
     </script>
 </body>
